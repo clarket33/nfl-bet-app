@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import PlayerPropDisplay from "./PlayerPropDisplay";
 import TeamPropDisplay from './TeamPropDisplay';

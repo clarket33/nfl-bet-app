@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import InstructionCarousel from './InstructionCarousel';

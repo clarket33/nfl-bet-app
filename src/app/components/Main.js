@@ -1,23 +1,13 @@
 import React,{ useEffect, useState, useMemo, useCallback } from "react";
 import GameOverview from "./GameOverview";
 import PopupComponent from "./PopupComponent";
-import SportsBookCustomize from "./SportsBookCustomize";
-import SportSelector from "./SportSelector";
 import '../Main.css';
-import Footer from "./Footer";
 import CookieConsent from "react-cookie-consent";
-import Image from 'next/image';
 import { bookmaker_names, league_titles, team_titles } from "../lib/Resources.js";
 import { 
-  Collapse,
-  Input,
-  Navbar,
-  Typography,
-  IconButton,
   Spinner,
   Alert
 } from "@material-tailwind/react";
-import { Bars3Icon, XMarkIcon, ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useQuery } from "@tanstack/react-query";
 
 import {americanfootball_nfl_team_props} from '../lib/sampledata/americanfootball_nfl_team_props.js';
@@ -29,13 +19,12 @@ import {basketball_ncaab_team_props} from '../lib/sampledata/basketball_ncaab_te
 
 
 export default function Main() {
+  /*
   const numGamesPerPage = 9;
   const [xAlertOpen, setXAlertOpen] = useState(window.sessionStorage.getItem('x_alert_dismissed') === 'true' ? false: true);
   const [filteredGames, setFilteredGames] = useState([]);
   const [sport, setSport] = useState(window.localStorage.getItem('sport') || 'americanfootball_nfl');
   const [filterText, setFilterText] = useState(window.sessionStorage.getItem('filter_text_' + sport) ? window.sessionStorage.getItem('filter_text_' + sport) : "");
-  const [bookies, setBookies] = useState(window.localStorage.getItem('my_sportsbooks') !== null ? new Set(JSON.parse(window.localStorage.getItem('my_sportsbooks'))) : new Set(Object.keys(bookmaker_names))) ;
-  const [openNav, setOpenNav] = useState(false);
   const [pages, setPages] = useState(0);
   const [endIndex, setEndIndex] = useState(numGamesPerPage);
 
@@ -47,18 +36,6 @@ export default function Main() {
     },
     [sport],
   );
-
-  const pull_user_books = (data) => {
-    setBookies(data);
-  }
-
-  const sportChange = (sportChoice) => {
-    setOpenNav(false);
-    setSport(sportChoice);
-  }
- 
-  const handleWindowResize = () =>
-    window.innerWidth >= 960 && setOpenNav(false);
 
   const [active, setActive] = useState(parseInt(window.sessionStorage.getItem('page_num')) || 1);
 
@@ -72,16 +49,8 @@ export default function Main() {
     setActive(active - 1);
   };
  
-  useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
- 
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
 
   const fetchData = async () => {
-    
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       let odds;
       if(sport === 'americanfootball_nfl'){
@@ -158,34 +127,7 @@ export default function Main() {
       <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32 32" width="32px" height="32px"><path d="M 4.0175781 4 L 13.091797 17.609375 L 4.3359375 28 L 6.9511719 28 L 14.246094 19.34375 L 20.017578 28 L 20.552734 28 L 28.015625 28 L 18.712891 14.042969 L 27.175781 4 L 24.560547 4 L 17.558594 12.310547 L 12.017578 4 L 4.0175781 4 z M 7.7558594 6 L 10.947266 6 L 24.279297 26 L 21.087891 26 L 7.7558594 6 z"/></svg>
     );
   }
-  
-  const InputInHeader = useMemo(() => {
-    return (
-      <div className="relative flex w-full">
-        <Input
-                  color="blue-gray"
-                  label="Search"
-                  value={filterText}
-                  onChange={filterGames}
-                  className="pr-20 w-full"
-                  containerProps={{
-                    className: "min-w-[60px]",
-                  }}
-                />
-        {filterText && (
-          <span className="absolute right-0 top-1.5 mr-2">
-            <IconButton
-            variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent"
-            onClick={() => (filterGames({target: {value:""}}))}
-          >
-                <XMarkIcon color="gray" className="h-5 w-5" strokeWidth={4} />
-            </IconButton>
-          </span>
-          )}
-      </div>
-    );
-  }, [filterText, filterGames]);
+   */
 
   return (
     <div>
@@ -199,54 +141,8 @@ export default function Main() {
     >
       We use cookies to enhance your browsing experience and to deliver targeted advertising on our website. You can learn more about how we use cookies & how to opt out in our <PopupComponent type="privacy" text="text-blue-500 text-sm cursor-pointer"/>{" "}
     </CookieConsent>
-      <Navbar className="sticky z-10 lg:px-8 lg:py-4 mx-auto max-w-screen-2xl">
-        <div className="flex flex-wrap items-center justify-between text-blue-700">
-          <Typography
-            color="blue"
-            variant="h6"
-            className="mr-4 cursor-pointer text-inherit py-1.5"
-          >
-            Shop the Line
-          </Typography>
-          <div className="hidden lg:block">
-            <SportSelector func={sportChange} sport={sport}></SportSelector>
-          </div>
-          <div className="hidden lg:block">
-            <div className="min-w-[450px] grid grid-cols-2 gap-2">
-              <SportsBookCustomize func={pull_user_books} bookies={bookies}></SportsBookCustomize>
-              <div>{InputInHeader}</div>
-            </div>
-          </div>
-          {!openNav ?
-          <div className="lg:hidden absolute  right-20 text-blue-700 opacity-70">
-            <Typography variant="small">
-                <span className="flex items-center justify-center font-semibold">{league_titles[sport]}
-                <Image className="object-cover ml-1" width={16} height={16} src={`/Images/Sports/${sport}.png`} alt={league_titles[sport]} /></span>
-            </Typography>
-          </div>:<></>}
-          <IconButton
-            variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={false}
-            onClick={() => setOpenNav(!openNav)}
-          >
-            {openNav ? (
-              <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-            ) : (
-             <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-            )} 
-          </IconButton>
-        </div>
-        <Collapse open={openNav}>
-            <SportSelector func={sportChange} sport={sport}></SportSelector>
-        </Collapse>
-        <div className="relative flex w-full gap-2 pt-3 
-         lg:hidden">
-            <SportsBookCustomize func={pull_user_books} bookies={bookies}></SportsBookCustomize>
-            {InputInHeader}
-        </div>
-      </Navbar>
-
+      <span>Home</span>
+      {/* 
       {status === "loading" || status === "error" ?
         <div className="flex flex-wrap justify-center items-center mt-8 mb-8">
           {status === "loading" ? <Spinner color="blue" className="h-12 w-12" />:
@@ -262,6 +158,7 @@ export default function Main() {
           </Alert>
         </div>
 
+        <Link href={`/${sport}`}>{sport}</Link>
       <div className="mx-auto max-w-screen-xl mb-16 mt-8">
           <div className="flex flex-wrap justify-center items-center mb-16 gap-4">
             {filteredGames.length > 0 ? filteredGames.slice(endIndex-numGamesPerPage,endIndex).map((game) => (
@@ -304,7 +201,7 @@ export default function Main() {
             </IconButton>
           </div> : <></>}
       </div></div>}
-      <Footer></Footer>
+      */}
     </div>
   );
 }

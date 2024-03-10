@@ -13,6 +13,7 @@ import {
 } from "@material-tailwind/react";
 import { league_titles} from "../lib/Resources.js";
 import Image from 'next/image';
+import Link from 'next/link';
 
 const menuItems = [
     {
@@ -53,8 +54,8 @@ export default function SportSelector(props) {
 
   const handleClick = (event) =>{
     let sport = event.target.id;
+    console.log(sport);
     setSport(sport);
-    props.func(sport);
   };
 
   return (
@@ -96,11 +97,9 @@ export default function SportSelector(props) {
                                     </Typography>
                                     <div>
                                         {category["subcategories"].map((item) => {
-                                            return  <MenuItem disabled={sport === item["name"] ? true : false} className="text-center border-b-2 font-semibold text-blue-gray-500" onClick={handleClick} id={item["name"]} key={item["name"]}>
-                                                     
-                                                    {league_titles[item["name"]]}
-                                                    
-                                                </MenuItem> 
+                                            return <Link href={`/${league_titles[item["name"]].toLowerCase()}`}><MenuItem disabled={sport === item["name"] ? true : false} className="text-center border-b-2 font-semibold text-blue-gray-500" onClick={handleClick} id={item["name"]} key={item["name"]}>
+                                                     {league_titles[item["name"]]}
+                                                </MenuItem> </Link>
                                         
                                         })}
                                     </div>
@@ -128,9 +127,9 @@ export default function SportSelector(props) {
                             </Typography>
                             <div>
                                 {category["subcategories"].map((item) => {
-                                    return  <Button variant="text" size="sm" color="blue-gray" disabled={sport === item["name"] ? true : false} className="text-center border-b-2 w-24" onClick={handleClick} id={item["name"]} key={item["name"]}>
+                                    return  <Link href={`/${league_titles[item["name"]].toLowerCase()}`}><Button variant="text" size="sm" color="blue-gray" disabled={sport === item["name"] ? true : false} className="text-center border-b-2 w-24" onClick={handleClick} id={item["name"]} key={item["name"]}>
                                             {league_titles[item["name"]]}
-                                        </Button> 
+                                        </Button></Link>
                                 
                                 })}
                             </div>

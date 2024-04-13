@@ -1,7 +1,9 @@
 'use client'
 
+import React, { useContext } from 'react'
 import GameOverview from "../components/GameOverview";
 import PopupComponent from "../components/PopupComponent";
+import  NavbarContext from "../components/NavBarContext";
 import '../Main.css';
 //import CookieConsent from "react-cookie-consent";
 import { bookmaker_names, league_titles, team_titles } from "../lib/Resources.js";
@@ -17,28 +19,30 @@ import {baseball_mlb_team_props} from '../lib/sampledata/baseball_mlb_team_props
 import {basketball_nba_team_props} from '../lib/sampledata/basketball_nba_team_props.js';
 import {americanfootball_ncaaf_team_props} from '../lib/sampledata/americanfootball_ncaaf_team_props.js';
 import {basketball_ncaab_team_props} from '../lib/sampledata/basketball_ncaab_team_props.js';
+import NavBarContext from '../components/NavBarContext';
 
 
 
 export default function Sport({params}) {
+    const { someProp } = useContext(NavBarContext);
+    console.log(someProp)
+
+    let bookies = new Set(Object.keys(bookmaker_names));
     const sport = params.sport;
-    return <span>{sport}</span>
-
-
     const fetchData = async () => {
         if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
         let odds;
-        if(sport === 'americanfootball_nfl'){
+        if(sport === 'nfl'){
             odds = americanfootball_nfl_team_props;
-        }else if(sport === 'baseball_mlb') {
+        }else if(sport === 'mlb') {
             odds = baseball_mlb_team_props;
-        }else if(sport === 'basketball_nba') {
+        }else if(sport === 'nba') {
             odds = basketball_nba_team_props;
-        }else if(sport === 'icehockey_nhl') {
+        }else if(sport === 'nhl') {
             odds = icehockey_nhl_team_props;
-        }else if(sport === 'americanfootball_ncaaf') {
+        }else if(sport === 'ncaaf') {
             odds = americanfootball_ncaaf_team_props;
-        }else if(sport === 'basketball_ncaab') {
+        }else if(sport === 'ncaab') {
             odds = basketball_ncaab_team_props;
         }
         let today = new Date();

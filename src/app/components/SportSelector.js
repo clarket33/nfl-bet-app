@@ -54,7 +54,6 @@ export default function SportSelector(props) {
 
   const handleClick = (event) =>{
     let sport = event.target.id;
-    console.log(sport);
     setSport(sport);
   };
 

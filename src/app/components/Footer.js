@@ -4,10 +4,12 @@ import PopupComponent from "./PopupComponent";
 import logo from '../../../public/Images/Misc/logo.png';
 import {  Typography } from "@material-tailwind/react";
 import Image from "next/image";
+import { ThemeProvider } from "@material-tailwind/react";
 
 const Footer = () => {
   
     return (
+    <ThemeProvider>
     <div>
       <div className="lg:hidden">
         <div className="mx-auto max-w-screen-2xl flex items-center justify-center border-t border-blue-gray-50 py-4 gap-2">
@@ -125,7 +127,8 @@ const Footer = () => {
       <div className="md:hidden mx-auto flex items-center justify-center text-center max-w-xs mb-4">
         <span className="text-gray-500 text-sm">Ages 21+. This site is for entertainment and informational purposes only, and no real money betting is involved. If you or someone you know has a gambling problem, please call 1-800-GAMBLER for help</span>
       </div>
-    </div>);
+    </div>
+    </ThemeProvider>);
   };
   
   export default Footer;

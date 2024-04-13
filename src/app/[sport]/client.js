@@ -2,14 +2,11 @@
  
 import React from 'react'
 import dynamic from 'next/dynamic'
- 
-const Sport = dynamic(() => import('./Sport'), { ssr: false })
-
-import { ThemeProvider } from "@material-tailwind/react";
 import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
+import { ThemeProvider } from "@material-tailwind/react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,16 +20,22 @@ const persister = createSyncStoragePersister({
   storage: window.sessionStorage,
 });
 
-export function ClientOnly() {
-    
-  return ( <ThemeProvider>
-            <PersistQueryClientProvider
-                client={queryClient}
-                persistOptions={{ persister }}
-            >
-                <Sport /> 
-                <ReactQueryDevtools initialIsOpen />
-                </PersistQueryClientProvider>
-    </ThemeProvider>
-  );
+
+/* react query ??
+export function generateStaticParams() {
+  return [{ slug: [''] }]
+}
+*/
+
+const Sport = dynamic(() => import('./Sport'), { ssr: false })
+ 
+export function ClientOnly({params}) {
+    return (<ThemeProvider>
+        <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister }}>
+            <Sport params={params}/>
+            <ReactQueryDevtools initialIsOpen />
+        </PersistQueryClientProvider>
+    </ThemeProvider>);
 }

@@ -1,5 +1,6 @@
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
+import NavBarContext, { NavBarProvider } from "./components/NavBarContext";
 
 export const metadata = {
   title: 'Shop the Line',
@@ -9,9 +10,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (<html lang="en">
       <body>
-          <NavBar></NavBar>
-          <div id="root">{children}</div>
-          <Footer></Footer>
+          <NavBarProvider>
+            <NavBar></NavBar>
+            <div id="root">{children}</div>
+            <Footer></Footer>
+          </NavBarProvider>
       </body>
   </html>)
 }

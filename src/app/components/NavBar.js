@@ -2,6 +2,7 @@
 
 import SportsBookCustomize from "./SportsBookCustomize";
 import SportSelector from "./SportSelector";
+import { ThemeProvider } from "@material-tailwind/react";
 import { bookmaker_names, league_titles, team_titles } from "../lib/Resources.js";
 import React,{ useEffect, useState, useMemo, useCallback } from "react";
 import { Bars3Icon, XMarkIcon, ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -76,7 +77,7 @@ export default function NavBar() {
         );
       }, [filterText]);
     
-    return (<Navbar className="sticky z-10 lg:px-8 lg:py-4 mx-auto max-w-screen-2xl">
+    return (<ThemeProvider><Navbar className="sticky z-10 lg:px-8 lg:py-4 mx-auto max-w-screen-2xl">
                 <div className="flex flex-wrap items-center justify-between text-blue-700">
                 <Typography
                     color="blue"
@@ -122,7 +123,7 @@ export default function NavBar() {
                     <SportsBookCustomize func={pull_user_books} bookies={bookies}></SportsBookCustomize>
                     {InputInHeader}
                 </div>
-            </Navbar>);
+            </Navbar></ThemeProvider>);
 }
 
 
